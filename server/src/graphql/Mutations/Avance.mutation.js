@@ -1,12 +1,11 @@
-const graphql = require("graphql");
-const { GraphQLString, GraphQLNonNull } = graphql;
+const { GraphQLString, GraphQLNonNull } = require("graphql");
 
-const ContributionType = require("../types/contribution_type");
-const Contribution = require("../../models/contribution.model");
+const AvanceType = require("../types/avance_type");
+const Avance = require("../models/avance.model");
 const { isTokenValid } = require("../../helper/auth");
 
-const addContribution = {
-  type: ContributionType,
+const addAvance = {
+  type: AvanceType,
   args: {
     title: {
       type: new GraphQLNonNull(GraphQLString),
@@ -20,14 +19,14 @@ const addContribution = {
   },
   async resolve(parent, args, context) {
     const user = await isTokenValid(context.token);
-    const contribution = new Contribution({
+    const avance = new Avance({
       title: args.title,
       description: args.description,
       userId: user.id,
       projectId: args.projectId,
     });
-    return contribution.save();
+    return avance.save();
   },
 };
 
-module.exports = { addContribution };
+module.exports = { addAvance };

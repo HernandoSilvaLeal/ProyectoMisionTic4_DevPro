@@ -1,14 +1,13 @@
-const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLList } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLList } = require("graphql");
 
 const UserType = require("./user_type");
 const ObservationType = require("./observation_type");
 
-const User = require("../../models/user.model");
-const Observation = require("../../models/observation.model");
+const User = require("../models/user.model");
+const Observation = require("../models/observation.model");
 
-const ContributionType = new GraphQLObjectType({
-  name: "Contribution",
+const AvanceType = new GraphQLObjectType({
+  name: "Avance",
   fields: () => ({
     _id: {
       type: GraphQLString,
@@ -28,10 +27,10 @@ const ContributionType = new GraphQLObjectType({
     observation: {
       type: new GraphQLList(ObservationType),
       resolve(parent, args) {
-        return Observation.find({ contributionId: parent.id });
+        return Observation.find({ avanceId: parent.id });
       },
     },
   }),
 });
 
-module.exports = ContributionType;
+module.exports = AvanceType;

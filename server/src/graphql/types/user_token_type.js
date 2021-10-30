@@ -1,6 +1,7 @@
-const graphql = require("graphql");
+const { GraphQLObjectType, GraphQLString } = require("graphql");
 
-const { GraphQLObjectType, GraphQLString } = graphql;
+const { ROLE_ENUM } = require("../Enums/Role.enum");
+const { STATE_ENUM } = require("../Enums/State.enum");
 
 const UserTokenType = new GraphQLObjectType({
   name: "UserToken",
@@ -15,10 +16,10 @@ const UserTokenType = new GraphQLObjectType({
       type: GraphQLString,
     },
     role: {
-      type: GraphQLString,
+      type: ROLE_ENUM,
     },
-    estate: {
-      type: GraphQLString,
+    state: {
+      type: STATE_ENUM,
     },
     token: {
       type: GraphQLString,

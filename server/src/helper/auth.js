@@ -1,11 +1,12 @@
 require("dotenv").config();
+
 const jwt = require("jsonwebtoken");
 
 function generateToken(user) {
   if (!user) {
     return Error("User must be provided.");
   }
-  return jwt.sign(user, process.env.SECRET, { expiresIn: "1h" });
+  return jwt.sign(user, process.env.SECRET, { expiresIn: "1d" });
 }
 
 async function isTokenValid(token) {

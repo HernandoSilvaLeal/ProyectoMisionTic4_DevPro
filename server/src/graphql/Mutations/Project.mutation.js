@@ -1,9 +1,8 @@
-const graphql = require("graphql");
-const { GraphQLString, GraphQLNonNull } = graphql;
+const { GraphQLString, GraphQLNonNull } = require("graphql");
 
 const ProjectType = require("../types/project_type");
 const { isTokenValid } = require("../../helper/auth");
-const Project = require("../../models/project.model");
+const Project = require("../models/project.model");
 
 const addProject = {
   type: ProjectType,
@@ -14,21 +13,17 @@ const addProject = {
     description: {
       type: new GraphQLNonNull(GraphQLString),
     },
-    status: {
-      type: new GraphQLNonNull(GraphQLString),
-    },
   },
-  async resolve(parent, args, context, info) {
+  async resolve(_, args, context) {
     const user = await isTokenValid(context.token);
-
-    console.log(user);
 
     const project = new Project({
       title: args.title,
       description: args.description,
-      status: args.status,
-      userId: user.id,
+      status: "",
+      leader: user.id,
     });
+
     return project.save();
   },
 };

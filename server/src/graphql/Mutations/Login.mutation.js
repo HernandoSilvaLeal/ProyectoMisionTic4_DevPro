@@ -1,10 +1,16 @@
-const graphql = require("graphql");
-const { GraphQLString, GraphQLNonNull } = graphql;
+const { GraphQLString, GraphQLNonNull } = require("graphql");
 const bcrypt = require("bcrypt");
 
 const UserTokenType = require("../types/user_token_type");
 const { generateToken } = require("../../helper/auth");
-const User = require("../../models/user.model");
+const User = require("../models/user.model");
+
+const checkUser = async (password, hashed) => {
+  const match = await bcrypt.compare(password, hashed);
+  if (!match) {
+    throw new Error("Password fail");
+  }
+};
 
 const login = {
   type: UserTokenType,
@@ -17,16 +23,13 @@ const login = {
     },
   },
   async resolve(_, { email, password }) {
-    const user = await User.findOne({ emails: email });
+    const user = await User.findOne({ email: email });
 
     if (!user) {
       throw new Error("Your data doesn't match our records");
     }
 
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) {
-      throw new Error("Password and email doesn't match");
-    }
+    checkUser(password, user.password);
 
     const token = generateToken({
       id: user._id,

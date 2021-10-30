@@ -1,11 +1,10 @@
-const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLList } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLList } = require("graphql");
 
 const UserType = require("./user_type");
-const ContributionType = require("./contribution_type");
+const AvanceType = require("./avance_type");
 
-const User = require("../../models/user.model");
-const Contribution = require("../../models/contribution.model");
+const User = require("../models/user.model");
+const Avance = require("../models/avance.model");
 
 const ProjectType = new GraphQLObjectType({
   name: "project",
@@ -19,22 +18,51 @@ const ProjectType = new GraphQLObjectType({
     description: {
       type: GraphQLString,
     },
+    mainGoal: {
+      type: GraphQLString,
+    },
+    generalGoal: {
+      type: GraphQLString,
+    },
+    budget: {
+      type: GraphQLString,
+    },
+    startDate: {
+      type: GraphQLString,
+    },
+    endDate: {
+      type: GraphQLString,
+    },
     status: {
       type: GraphQLString,
     },
-    user: {
+    fase: {
+      type: GraphQLString,
+    },
+    lider: {
       type: UserType,
       resolve(parent, args) {
         return User.findById(parent.userId);
       },
     },
-    contributions: {
-      type: new GraphQLList(ContributionType),
+    avances: {
+      type: new GraphQLList(AvanceType),
       resolve(parent, args) {
-        return Contribution.find({ projectId: parent.id });
+        return Avance.find({ projectId: parent.id });
       },
+    },
+    students: {
+      userId: {
+        type: new GraphQLList(UserType),
+        resolve(parent, args) {
+          return User.findById(parent.student.userId);
+        },
+      },
+      // status: { type: String, required: true },
+      // activationDate: { type: Date, required: true },
+      // inacivationDate: { type: Date, required: false },
     },
   }),
 });
 
-module.exports = ProjectType;
+module.exports = ProjactType;

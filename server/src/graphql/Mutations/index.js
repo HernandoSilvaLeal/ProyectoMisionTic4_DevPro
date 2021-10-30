@@ -1,21 +1,25 @@
-const graphql = require("graphql");
-const { GraphQLObjectType } = graphql;
+const { GraphQLObjectType } = require("graphql");
 
 const { addProject } = require("./Project.mutation");
 const { addObservation } = require("./Observation.mutation");
-const { addContribution } = require("./Contribution.mutation");
+const { addAvance } = require("./Avance.mutation");
 
 const { login } = require("./Login.mutation");
 const { register } = require("./Register.mutation");
+
+const { updateSelfUser } = require("./User/updateSelf.mutation");
+const { updateOtherUser } = require("./User/updateOtherUser.mutation");
 
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
     addProject,
     addObservation,
-    addContribution,
+    addAvance,
     login,
     register,
+    updateSelfUser,
+    updateOtherUser,
   },
 });
 

@@ -1,9 +1,8 @@
-const graphql = require("graphql");
-const { GraphQLObjectType } = graphql;
+const { GraphQLObjectType } = require("graphql");
 
 const { user, users } = require("./Users.query");
 const { project, projects } = require("./Projects.query");
-const { contribution, contributions } = require("./Contributions.query");
+const { avance, avances } = require("./Avances.query");
 const { observation, observations } = require("./Observations.query");
 
 const RootQuery = new GraphQLObjectType({
@@ -13,8 +12,8 @@ const RootQuery = new GraphQLObjectType({
     user,
     project,
     projects,
-    contribution,
-    contributions,
+    avance,
+    avances,
     observation,
     observations,
   },

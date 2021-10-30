@@ -1,14 +1,12 @@
-const graphql = require("graphql");
-const { GraphQLList, GraphQLID } = graphql;
+const { GraphQLList, GraphQLID } = require("graphql");
 
 const { isTokenValid } = require("../../helper/auth");
-const User = require("../../models/user.model");
+const User = require("../models/user.model");
 const UserType = require("../types/user_type");
 
 const users = {
   type: new GraphQLList(UserType),
   async resolve(_, __, context) {
-    console.log("Hola Mundo");
     await isTokenValid(context.token);
 
     return User.find({});

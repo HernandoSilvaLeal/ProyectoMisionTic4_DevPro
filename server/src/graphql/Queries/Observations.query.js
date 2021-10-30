@@ -1,9 +1,8 @@
-const graphql = require("graphql");
-const { GraphQLList, GraphQLID } = graphql;
+const { GraphQLList, GraphQLID } = require("graphql");
 
 const { isTokenValid } = require("../../helper/auth");
 const ObservationType = require("../types/observation_type");
-const Observation = require("../../models/observation.model");
+const Observation = require("../models/observation.model");
 
 const observations = {
   type: new GraphQLList(ObservationType),
