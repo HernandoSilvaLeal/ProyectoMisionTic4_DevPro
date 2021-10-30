@@ -3,6 +3,7 @@ const { GraphQLList, GraphQLID } = require("graphql");
 const { isTokenValid } = require("../../helper/auth");
 const Project = require("../models/project.model");
 const ProjectType = require("../types/project_type");
+const { ROLE_ENUM } = require("../Enums/Role.enum");
 
 const projects = {
   type: new GraphQLList(ProjectType),
