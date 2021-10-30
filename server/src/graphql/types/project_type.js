@@ -2,9 +2,12 @@ const { GraphQLObjectType, GraphQLString, GraphQLList } = require("graphql");
 
 const UserType = require("./user_type");
 const AvanceType = require("./avance_type");
+const ProjectStudentType = require("./project_student_type");
 
 const User = require("../models/user.model");
 const Avance = require("../models/avance.model");
+
+const { STATUS_ENUM } = require("../Enums/Status.enum");
 
 const ProjectType = new GraphQLObjectType({
   name: "project",
@@ -34,35 +37,27 @@ const ProjectType = new GraphQLObjectType({
       type: GraphQLString,
     },
     status: {
-      type: GraphQLString,
+      type: STATUS_ENUM,
     },
     fase: {
       type: GraphQLString,
     },
     lider: {
       type: UserType,
-      resolve(parent, args) {
-        return User.findById(parent.userId);
+      resolve(parent) {
+        return User.findById(parent.leader);
       },
     },
     avances: {
       type: new GraphQLList(AvanceType),
-      resolve(parent, args) {
+      resolve(parent) {
         return Avance.find({ projectId: parent.id });
       },
     },
     students: {
-      userId: {
-        type: new GraphQLList(UserType),
-        resolve(parent, args) {
-          return User.findById(parent.student.userId);
-        },
-      },
-      // status: { type: String, required: true },
-      // activationDate: { type: Date, required: true },
-      // inacivationDate: { type: Date, required: false },
+      type: new GraphQLList(ProjectStudentType),
     },
   }),
 });
 
-module.exports = ProjactType;
+module.exports = ProjectType;
