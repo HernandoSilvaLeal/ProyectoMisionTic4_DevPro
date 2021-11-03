@@ -39,8 +39,7 @@ const login = {
     });
 
     return {
-      ...user._doc,
-      id: user._id,
+      user: { ...user._doc, id: user._id },
       token: token,
     };
   },

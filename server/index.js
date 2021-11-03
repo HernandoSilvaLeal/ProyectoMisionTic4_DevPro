@@ -3,11 +3,13 @@ const graphqlHTTP = require("express-graphql").graphqlHTTP;
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
-const expressPlayground = require("graphql-playground-middleware-express")
-  .default;
+const connection = mongoose.connection;
+const expressPlayground =
+  require("graphql-playground-middleware-express").default;
 require("dotenv").config();
 
-const connection = mongoose.connection;
+console.log();
+
 app.use(cors());
 app.use(express.json());
 

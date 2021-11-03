@@ -1,25 +1,12 @@
 const { GraphQLObjectType, GraphQLString } = require("graphql");
 
-const { ROLE_ENUM } = require("../Enums/Role.enum");
-const { STATE_ENUM } = require("../Enums/State.enum");
+const UserType = require("./user_type");
 
 const UserTokenType = new GraphQLObjectType({
   name: "UserToken",
   fields: () => ({
-    _id: {
-      type: GraphQLString,
-    },
-    name: {
-      type: GraphQLString,
-    },
-    email: {
-      type: GraphQLString,
-    },
-    role: {
-      type: ROLE_ENUM,
-    },
-    state: {
-      type: STATE_ENUM,
+    user: {
+      type: UserType,
     },
     token: {
       type: GraphQLString,

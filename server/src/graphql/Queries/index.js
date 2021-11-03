@@ -4,6 +4,7 @@ const { user, users } = require("./Users.query");
 const { project, projects } = require("./Projects.query");
 const { avance, avances } = require("./Avances.query");
 const { observation, observations } = require("./Observations.query");
+const { checkSession } = require("./CheckSession.query");
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -16,6 +17,7 @@ const RootQuery = new GraphQLObjectType({
     avances,
     observation,
     observations,
+    checkSession,
   },
 });
 
