@@ -1,6 +1,6 @@
 const { GraphQLObjectType } = require("graphql");
 
-const { addProject } = require("./Project.mutation");
+const { addProject, toggleProjectStatus } = require("./Project.mutation");
 const { addObservation } = require("./Observation.mutation");
 const { addAvance } = require("./Avance.mutation");
 
@@ -14,6 +14,7 @@ const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
     addProject,
+    toggleProjectStatus,
     addObservation,
     addAvance,
     login,

@@ -58,4 +58,32 @@ const projectJoinStudent = {
   resolve(parent) {},
 };
 
-module.exports = { addProject };
+const toggleProjectStatus = {
+  type: ProjectType,
+  args: {
+    projectId: {
+      type: GraphQLString,
+    },
+  },
+  async resolve(_, args, context) {
+    const user = await isTokenValid(context.token);
+    try {
+      if (user.role !== ROLE_ENUM.getValue("ADMIN").value) {
+        throw new Error("No tienes permisos para editar un estado");
+      }
+      const project = await Project.findByIdAndUpdate(args.projectId);
+
+      project.status =
+        project.status === STATUS_ENUM.getValue("ACTIVE").value
+          ? STATUS_ENUM.getValue("INACTIVE").value
+          : STATUS_ENUM.getValue("ACTIVE").value;
+
+      console.log(project);
+      return project.save();
+    } catch (err) {
+      throw new Error(err);
+    }
+  },
+};
+
+module.exports = { addProject, toggleProjectStatus };
