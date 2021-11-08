@@ -21,6 +21,9 @@ const register = {
     password: {
       type: new GraphQLNonNull(GraphQLString),
     },
+    confirmPassword: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
     identification: {
       type: new GraphQLNonNull(GraphQLString),
     },
@@ -47,7 +50,7 @@ const register = {
     const user = new User({
       ...args,
       password: hashPassword,
-      state: STATE_ENUM.getValue("PENDING").value,
+      state: "Pendiente",
     });
 
     try {
@@ -61,8 +64,7 @@ const register = {
       });
 
       return {
-        ...res._doc,
-        id: res._id,
+        user: { ...user._doc, id: user._id },
         token: token,
       };
     } catch (error) {

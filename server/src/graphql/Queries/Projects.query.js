@@ -15,6 +15,10 @@ const projects = {
       return Project.find({ leader: user.id });
     }
 
+    if (user.role === ROLE_ENUM.getValue("STUDENT").value) {
+      return Project.find({ status: "Activo" });
+    }
+
     return Project.find({});
   },
 };
